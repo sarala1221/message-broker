@@ -10,10 +10,13 @@ spring:
           queue: topic.completed.task
         pending:
           queue: topic.pending.task
+        ondemand:
+          queue: topic.ondemand.task
         routingkey:
           pending: topic.pending.#
           completed: topic.*.task
           inprogress: topic.ip.#
+          ondemand: topic.ondemand.*.*.task
     fanout:
         exchange: fanout.task
         inprogress:

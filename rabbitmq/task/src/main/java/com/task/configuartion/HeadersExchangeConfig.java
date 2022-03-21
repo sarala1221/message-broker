@@ -38,25 +38,21 @@ public class HeadersExchangeConfig {
 
 	@Bean
 	HeadersExchange myheadersExchange() {
-		System.out.println("headersExchange >> " + headersExchange);
 		return ExchangeBuilder.headersExchange(headersExchange).durable(true).build();
 	}
 
 	@Bean
 	Binding cHQueueBinding() {
-		System.out.println("cHQueue >> ");
 		return BindingBuilder.bind(cHQueue()).to(myheadersExchange()).where("task").matches("completed");
 	}
 
 	@Bean
 	Binding penQBinding() {
-		System.out.println("pHQueue >> ");
 		return BindingBuilder.bind(pHQueue()).to(myheadersExchange()).where("task").matches("pending");
 	}
 
 	@Bean
 	Binding iPBinding() {
-		System.out.println("ipHQueue >> ");
 		return BindingBuilder.bind(ipHQueue()).to(myheadersExchange()).where("task").matches("ip");
 	}
 }

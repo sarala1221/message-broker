@@ -28,6 +28,11 @@ public class TopicExchangeConfig {
 	private String cRoutingKey;
 	@Value("${spring.rabbitmq.topic.routingkey.inprogress}")
 	private String ipRoutingKey;
+	
+	@Value("${spring.rabbitmq.topic.ondemand.queue}")
+	private String oDQueue;
+	@Value("${spring.rabbitmq.topic.routingkey.ondemand}")
+	private String oDRoutingKey;
 
 	@Bean
 	Queue pendingQueue() {
@@ -42,6 +47,11 @@ public class TopicExchangeConfig {
 	@Bean
 	Queue ipQueue() {
 		return new Queue(ipQueue, true);
+	}
+	
+	@Bean
+	Queue oDQueue() {
+		return new Queue(oDQueue, true);
 	}
 
 	@Bean
@@ -62,6 +72,11 @@ public class TopicExchangeConfig {
 	@Bean
 	Binding cQBinding() {
 		return BindingBuilder.bind(cQueue()).to(myTopicExchange()).with(cRoutingKey).noargs();
+	}
+	
+	@Bean
+	Binding cDBinding() {
+		return BindingBuilder.bind(oDQueue()).to(myTopicExchange()).with(oDRoutingKey).noargs();
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,9 +30,9 @@ public class TaskConsumerController {
 	private TaskReceiver receiver;
 
 	@GetMapping(value = "/topic")
-	public ResponseEntity<Task> receiveTask() {
+	public ResponseEntity<Task> receiveTask(@RequestHeader("queue") String queue) {
 
-		Task task = receiver.receiveMessage();
+		Task task = receiver.receiveMessage(queue);
 		if(task == null) {
 			return new ResponseEntity<Task>(task, HttpStatus.NOT_FOUND);
 		}

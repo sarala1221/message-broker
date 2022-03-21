@@ -79,7 +79,7 @@ public class TaskReceiver implements RabbitListenerConfigurer {
 		}
 	}
 
-	public Task receiveMessage() {
+	public Task receiveMessage(String queue) {
 		Message message = rabbitTemplate.receive(queue);
 		if (null == message)
 			return null;

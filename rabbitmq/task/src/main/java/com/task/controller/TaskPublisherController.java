@@ -42,7 +42,7 @@ public class TaskPublisherController {
 	@PostMapping(value = "/topic")
 	public ResponseEntity<String> publishTaskToTopicE(@RequestBody Task task,
 			@RequestHeader("routeKey") String routeKey, @RequestHeader(required = false, name = "queue") String queue) {
-		logger.info("rKey >>> {}", routeKey);
+		logger.info("rKey >>> {},  Queue >> {}", routeKey, queue);
 		try {
 			publisher.sendToTopic(task, routeKey);
 			return new ResponseEntity<String>("Message Sent Successfully", HttpStatus.CREATED);

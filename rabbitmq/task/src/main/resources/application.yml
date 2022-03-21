@@ -1,0 +1,46 @@
+app:
+  message: Message has been sent Successfully..
+spring:
+  rabbitmq:
+    topic:
+        exchange: topic.task
+        inprogress:
+          queue: topic.inprgress.task
+        completed:
+          queue: topic.completed.task
+        pending:
+          queue: topic.pending.task
+        routingkey:
+          pending: topic.pending.#
+          completed: topic.*.task
+          inprogress: topic.ip.#
+    fanout:
+        exchange: fanout.task
+        inprogress:
+            queue: fanout.inprgress.task
+        completed:
+            queue: fanout.completed.task
+        pending:
+            queue: fanout.pending.task
+        routingkey: #-will be ignored for fanout exchange
+          pending: fanout.pending
+          completed: fanout.completed
+          inprogress: fanout.inprogress
+    headers:
+        inprogress:
+          queue: headers.inprgress.task
+        completed:
+          queue: headers.completed.task
+        pending:
+          queue: headers.pending.task
+        exchange: headers.task
+    host: localhost
+    password: guest
+    port: 15672
+    username: guest
+    exchange: task.exchange
+#direct exchange
+    queue: task.queue
+    routingkey: task.routingkey
+server:
+  port: 9091
